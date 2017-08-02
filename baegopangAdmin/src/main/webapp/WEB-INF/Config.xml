@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration><!-- DB설정(Connection) -->
+	<typeAliases>
+		<typeAlias type="spring.baegopang.bean.AdminBean" alias="admin"/>
+		<typeAlias type="spring.baegopang.bean.BrandBean" alias="brand"/>
+		<typeAlias type="spring.baegopang.bean.ChartBean" alias="chart"/>
+		<typeAlias type="spring.baegopang.bean.MasterAskAdminBean" alias="ask"/>
+		<typeAlias type="spring.baegopang.bean.MasterBean" alias="master"/>
+		<typeAlias type="spring.baegopang.bean.MemberBean" alias="member"/>
+		<typeAlias type="spring.baegopang.bean.MenuBean" alias="menu"/>
+		<typeAlias type="spring.baegopang.bean.NoticeBean" alias="notice"/>
+		<typeAlias type="spring.baegopang.bean.OrderBean" alias="order"/>
+		<typeAlias type="spring.baegopang.bean.StoreBean" alias="store"/>
+	</typeAliases>
+	<mappers>
+		<mapper resource="spring/baegopang/xml/admin.xml" />
+		<mapper resource="spring/baegopang/xml/brand.xml" />
+		<mapper resource="spring/baegopang/xml/chart.xml" />
+		<mapper resource="spring/baegopang/xml/master.xml" />
+		<mapper resource="spring/baegopang/xml/masterAskAdmin.xml" />
+		<mapper resource="spring/baegopang/xml/member.xml" />
+		<mapper resource="spring/baegopang/xml/menu.xml" />
+		<mapper resource="spring/baegopang/xml/notice.xml" />
+		<mapper resource="spring/baegopang/xml/order.xml" />
+		<mapper resource="spring/baegopang/xml/store.xml" />
+	</mappers>
+</configuration>
