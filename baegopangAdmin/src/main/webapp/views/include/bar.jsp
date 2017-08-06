@@ -37,12 +37,12 @@
 	<div class="collapse navbar-collapse navbar-ex1-collapse">
 		<ul class="nav navbar-nav side-nav">
 			<li>
-				<a href="#">
+				<a href="home.do">
 					<i class="fa fa-fw fa-dashboard"></i> 홈
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="chart.do">
 					<i class="fa fa-fw fa-bar-chart-o"></i> 그래프
 				</a>
 			</li>
@@ -53,74 +53,74 @@
 				</a>
 				<ul id="demo" class="collapse">
 					<li>
-						<a href="#">
+						<a href="brand.do">
 							<i class="fa fa-fw fa-table"></i> 브랜드
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="master.do">
 							<i class="fa fa-fw fa-table"></i> 사장
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="requestSign.do">
 							<i class="fa fa-fw fa-table"></i> 가입요청
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="requestDrop.do">
 							<i class="fa fa-fw fa-table"></i> 탈퇴요청
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="member.do">
 							<i class="fa fa-fw fa-table"></i> 사용자
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="menu.do">
 							<i class="fa fa-fw fa-table"></i> 메뉴
 						</a>
 					</li>
 					<li>
-						<a href="#">
-							<i class="fa fa-fw fa-table"></i> 주문배달완료
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<i class="fa fa-fw fa-table"></i> 주문승인대기
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<i class="fa fa-fw fa-table"></i> 주문배달중
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<i class="fa fa-fw fa-table"></i> 주문승인거절
-						</a>
-					</li>
-					<li>
-						<a href="#">
+						<a href="store.do">
 							<i class="fa fa-fw fa-table"></i> 음식점
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="unStore.do">
 							<i class="fa fa-fw fa-table"></i> 미선택음식점
+						</a>
+					</li>
+					<li>
+						<a href="orderComplete.do">
+							<i class="fa fa-fw fa-table"></i> 주문배달완료
+						</a>
+					</li>
+					<li>
+						<a href="orderWait.do">
+							<i class="fa fa-fw fa-table"></i> 주문승인대기
+						</a>
+					</li>
+					<li>
+						<a href="ordering.do">
+							<i class="fa fa-fw fa-table"></i> 주문배달중
+						</a>
+					</li>
+					<li>
+						<a href="orderNagative.do">
+							<i class="fa fa-fw fa-table"></i> 주문승인거절
 						</a>
 					</li>
 				</ul>
 			</li>
 			<li>
-            	<a href="#">
-            		<i class="fa fa-fw fa-edit"></i> 공지사항
-            	</a>
+	            	<a href="notice.do">
+	            		<i class="fa fa-fw fa-edit"></i> 공지사항
+	            	</a>
             </li>
             <li>
-				<a href="#">
+				<a href="ask.do">
 					<i class="fa fa-fw fa-edit"></i> 문의
 				</a>
 			</li>

@@ -65,4 +65,101 @@ public class BaegopangController {
 		session.invalidate();
 		return "redirect:index.do";
 	}
+	
+	/* 홈으로 이동 */
+	@RequestMapping(value="home.do")
+	public String homeAction() {
+		return "views/main";
+	}
+	
+	/* 그래프 관리로 이동 */
+	@RequestMapping(value="chart.do")
+	public String chartAction() {
+		return "views/chart";
+	}
+	
+	/* 브랜드 테이블 관리로 이동 */
+	@RequestMapping(value="brand.do")
+	public String brandAction() {
+		return "views/brand";
+	}
+	
+	/* 사장 테이블 관리로 이동 */
+	@RequestMapping(value="master.do")
+	public String masterAction() {
+		return "views/master";
+	}
+	
+	/* 사장 가입요청 테이블 관리로 이동 */
+	@RequestMapping(value="requestSign.do")
+	public String requestSignAction() {
+		return "views/masterInRequest";
+	}
+	
+	/* 사장 탈퇴요청 테이블 관리로 이동 */
+	@RequestMapping(value="requestDrop.do")
+	public String requestDropAction() {
+		return "views/masterDrRequest";
+	}
+	
+	/* 사용자 테이블 관리로 이동 */
+	@RequestMapping(value="member.do")
+	public String memberAction() {
+		return "views/member";
+	}
+	
+	/* 메뉴 테이블 관리로 이동 */
+	@RequestMapping(value="menu.do")
+	public String menuAction() {
+		return "views/menu";
+	}
+	
+	/* 음식점 테이블 관리로 이동 */
+	@RequestMapping(value="store.do")
+	public String storeAction() {
+		return "views/store";
+	}
+	
+	/* 미지정 음식점 테이블 관리로 이동 */
+	@RequestMapping(value="unStore.do")
+	public String unStoreAction() {
+		return "views/unStore";
+	}
+	
+	/* 주문 완료 테이블 관리로 이동 */
+	@RequestMapping(value="orderComplete.do")
+	public String orderCompleteAction() {
+		return "views/orderComplete";
+	}
+	
+	/* 주문 대기 테이블 관리로 이동 */
+	@RequestMapping(value="orderWait.do")
+	public String orderWaitAction() {
+		return "views/orderWait";
+	}
+	
+	/* 주문 배달 중인 테이블 관리로 이동 */
+	@RequestMapping(value="ordering.do")
+	public String orderingAction() {
+		return "views/ordering";
+	}
+	
+	/* 주문 거절 테이블 관리로 이동 */
+	@RequestMapping(value="orderNagative.do")
+	public String orderNagativeAction() {
+		return "views/orderNegative";
+	}
+	
+	/* 공지사항 테이블 관리로 이동 */
+	@RequestMapping(value="notice.do")
+	public String noticeAction() {
+		return "views/notice";
+	}
+	
+	/* 문의 테이블 관리로 이동 */
+	@RequestMapping(value="ask.do")
+	public String askAction() {
+		return "views/ask";
+	}
+	
 }
