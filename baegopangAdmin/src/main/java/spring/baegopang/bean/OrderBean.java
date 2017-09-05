@@ -1,6 +1,6 @@
 package spring.baegopang.bean;
 
-public class OrderBean {
+public class OrderBean implements DefaultBean{
 	private String ordernumber;
 	private String memberid;
 	private String membername;

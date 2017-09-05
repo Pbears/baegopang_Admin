@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -50,12 +51,12 @@ div .divInfo{
 <script>
 	$(function() {
 		$("button#noticeInsertBtn").click(function() {
-			location.href="/baegopangAdmin/jsp/notice/insert.jsp";
+			location.href="noticeInsert.do";
 		});
 		$("button.noticeDeleteBtn").click(function() {
 			var result = confirm('정말 삭제하시겠습니까?');
 			if(result) { 
-				location.href="/baegopangAdmin/jsp/notice/delete.jsp?no="+$(this).attr("id");
+				location.href="noticeDelete.do?no="+$(this).attr("id");
 			}
 		});
 	});
@@ -98,14 +99,16 @@ div .divInfo{
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>1</td>
-										<td>1</td>
-										<td>1</td>
-										<td><div class="divInfo">1</div></td>
-										<td>1</td>
-										<td><button type="button" class="btn btn-sm btn-danger noticeDeleteBtn">삭제</button></td>
-									</tr>
+									<c:forEach var="i" items="${list}">
+										<tr>
+											<td>${i.no}</td>
+											<td>${i.adminid}</td>
+											<td>${i.title}</td>
+											<td><div class="divInfo">${i.info}</div></td>
+											<td>${i.regdate}</td>
+											<td><button type="button" class="btn btn-sm btn-danger noticeDeleteBtn" id="${i.no}">삭제</button></td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
@@ -117,23 +120,48 @@ div .divInfo{
 							style="width: 100%; margin: 0 auto; text-align: center;">
 							<ul class="pagination">
 								<ul class="pager">
-									<li>
-										<a href="#">Previous</a>
-									</li>
+									<c:choose>
+										<c:when test="${pageBean.currentPage == 1}">
+											<li>
+												<a href="#">Previous</a>
+											</li>
+										</c:when>
+										<c:when test="${pageBean.currentPage <= pageBean.totalPage}">
+											<li>
+												<a href="notice.do?pages=${pageBean.currentPage-1}">Previous</a>
+											</li>
+										</c:when>
+									</c:choose>
+									
 									<span> 
-					 					<li>
-					 						<a href="#"><strong>1</strong></a>
-					 					</li> 
-					 					<li>
-					 						<a href="#"><strong>2</strong></a>
-					 					</li> 
-					 					<li>
-					 						<a href="#"><strong>3</strong></a>
-					 					</li> 
+										<c:forEach var="i" begin="${pageBean.startPage}" end="${pageBean.endPage}" step="1">
+											<c:choose>
+												<c:when test="${pageBean.currentPage == i}">
+													<li>
+								 						<a href="notice.do?pages=${i}"><strong>${i}</strong></a>
+								 					</li>
+												</c:when>
+												<c:otherwise>
+													<li>
+								 						<a href="notice.do?pages=${i}">${i}</a>
+								 					</li>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
 									</span>
-									<li>
-										<a href="#">Next</a>
-									</li>
+									
+									<c:choose>
+										<c:when test="${pageBean.currentPage == pageBean.totalPage}">
+											<li>
+												<a href="#">Next</a>
+											</li>
+										</c:when>
+										<c:when test="${pageBean.currentPage < pageBean.totalPage}">
+											<li>
+												<a href="notice.do?pages=${pageBean.currentPage+1}">Next</a>
+											</li>
+										</c:when>
+									</c:choose>
 								</ul>
 							</ul>
 						</div>

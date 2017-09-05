@@ -3,10 +3,27 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="spring.baegopang.xml.member"> 
-
+	<!-- member 모튼 데이터 가져오기 -->
+	<sql id="allMember">
+		SELECT ROW_NUMBER() OVER(ORDER BY id)RM, ID, PW, NAME, ADDRESS, TEL, GENDER, TO_CHAR(BIRTH, 'YYYY/MM/DD') BIRTH, PANG
+		FROM MEMBER
+	</sql>
+	
+	<!-- member 테이블 모든 데이터를 paging 후 가져오기 -->	
+	<select id="selectMember" parameterType="java.util.HashMap" resultType="member">
+		SELECT RM, ID, PW, NAME, ADDRESS, TEL, GENDER, BIRTH, PANG
+		FROM(<include refid="allMember"/>)
+		<if test="start!=null">
+			<where>
+				RM BETWEEN #{start} AND #{end}
+			</where>
+		</if>
+		ORDER BY ID
+	</select>
+	
+	<!-- member 테이블 총 행 개수 가져오기 -->
+	<select id="getMemberTotalRow" resultType="java.lang.Integer">
+		SELECT COUNT(ID)
+		FROM MEMBER
+	</select>
 </mapper>
-
-
-
-
-

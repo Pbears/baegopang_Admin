@@ -1,12 +1,12 @@
 package spring.baegopang.bean;
 
-public class MasterAskAdminBean {
+public class MasterAskAdminBean implements DefaultBean{
 	private String no;
 	private String title;
-	private String masterInfo;
-	private String masterId;
-	private String adminInfo;
-	private String adminId;
+	private String masterinfo;
+	private String masterid;
+	private String admininfo;
+	private String adminid;
 	private String regdate;
 	private int hit;
 
@@ -14,10 +14,17 @@ public class MasterAskAdminBean {
 		super();
 	}
 
-	@Override
-	public String toString() {
-		return "masterAskAdmin [no=" + no + ", title=" + title + ", masterInfo=" + masterInfo + ", masterId=" + masterId
-				+ ", adminInfo=" + adminInfo + ", adminId=" + adminId + ", regdate=" + regdate + ", hit=" + hit + "]";
+	public MasterAskAdminBean(String no, String title, String masterinfo, String masterid, String admininfo,
+			String adminid, String regdate, int hit) {
+		super();
+		this.no = no;
+		this.title = title;
+		this.masterinfo = masterinfo;
+		this.masterid = masterid;
+		this.admininfo = admininfo;
+		this.adminid = adminid;
+		this.regdate = regdate;
+		this.hit = hit;
 	}
 
 	public String getNo() {
@@ -36,36 +43,36 @@ public class MasterAskAdminBean {
 		this.title = title;
 	}
 
-	public String getMasterInfo() {
-		return masterInfo;
+	public String getMasterinfo() {
+		return masterinfo;
 	}
 
-	public void setMasterInfo(String masterInfo) {
-		this.masterInfo = masterInfo;
+	public void setMasterinfo(String masterinfo) {
+		this.masterinfo = masterinfo;
 	}
 
-	public String getMasterId() {
-		return masterId;
+	public String getMasterid() {
+		return masterid;
 	}
 
-	public void setMasterId(String masterId) {
-		this.masterId = masterId;
+	public void setMasterid(String masterid) {
+		this.masterid = masterid;
 	}
 
-	public String getAdminInfo() {
-		return adminInfo;
+	public String getAdmininfo() {
+		return admininfo;
 	}
 
-	public void setAdminInfo(String adminInfo) {
-		this.adminInfo = adminInfo;
+	public void setAdmininfo(String admininfo) {
+		this.admininfo = admininfo;
 	}
 
-	public String getAdminId() {
-		return adminId;
+	public String getAdminid() {
+		return adminid;
 	}
 
-	public void setAdminId(String adminId) {
-		this.adminId = adminId;
+	public void setAdminid(String adminid) {
+		this.adminid = adminid;
 	}
 
 	public String getRegdate() {
@@ -84,17 +91,12 @@ public class MasterAskAdminBean {
 		this.hit = hit;
 	}
 
-	public MasterAskAdminBean(String no, String title, String masterInfo, String masterId, String adminInfo, String adminId,
-			String regdate, int hit) {
-		super();
-		this.no = no;
-		this.title = title;
-		this.masterInfo = masterInfo;
-		this.masterId = masterId;
-		this.adminInfo = adminInfo;
-		this.adminId = adminId;
-		this.regdate = regdate;
-		this.hit = hit;
+	@Override
+	public String toString() {
+		return "MasterAskAdminBean [no=" + no + ", title=" + title + ", masterinfo=" + masterinfo + ", masterid="
+				+ masterid + ", admininfo=" + admininfo + ", adminid=" + adminid + ", regdate=" + regdate + ", hit="
+				+ hit + "]";
 	}
 
+	
 }

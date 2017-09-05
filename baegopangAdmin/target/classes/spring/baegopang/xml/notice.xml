@@ -3,5 +3,40 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="spring.baegopang.xml.notice">
+	<!-- notice 테이블 모든 데이터 가져오기 -->
+	<sql id="allNotice">
+		SELECT ROW_NUMBER() OVER(ORDER BY NO)RM, NO, TITLE, ADMINID, INFO, REGDATE
+		FROM NOTICE
+	</sql> 
 
+	<!-- brand 테이블 모든 데이터를 paging 후 가져오기 -->	
+	<select id="selectNotice" parameterType="java.util.HashMap" resultType="notice">
+		SELECT RM, NO, TITLE, ADMINID, INFO, REGDATE
+		FROM(<include refid="allNotice"/>)
+		<if test="start!=null">
+			<where>
+				RM BETWEEN #{start} AND #{end}
+			</where>
+		</if>
+		ORDER BY NO
+	</select>
+	
+	<!-- brand 테이블 총 행 개수 가져오기 -->
+	<select id="getNoticeTotalRow" resultType="java.lang.Integer">
+		SELECT COUNT(NO)
+		FROM NOTICE
+	</select>
+	
+	<!-- 공지사항 등록 -->
+	<insert id="insertNotice" parameterType="notice">
+		INSERT INTO NOTICE
+		VALUES(seq_notice.NEXTVAL, #{info}, SYSDATE, 'admin', #{title})
+	</insert>
+	
+	<!-- 공지사항 삭제 -->
+	<delete id="deleteNotice" parameterType="java.lang.String">
+		DELETE FROM NOTICE
+		WHERE NO = #{no}
+	</delete>
+	
 </mapper>

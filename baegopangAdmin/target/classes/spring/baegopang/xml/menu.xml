@@ -3,5 +3,37 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="spring.baegopang.xml.menu">
+	<!-- menu 테이블 모든 데이터 가져오기 -->
+	<sql id="allMenu">
+		SELECT ROW_NUMBER() OVER(ORDER BY MENUNAME)RM, MENUNAME,
+		BRANDNO, PRICE, INFO, PICTURE
+		FROM MENU
+	</sql>
 
+	<!-- brand 테이블 모든 데이터를 paging 후 가져오기 -->
+	<select id="selectMenu" parameterType="java.util.HashMap"
+		resultType="menu">
+		SELECT RM, MENUNAME, BRANDNO, PRICE, INFO, PICTURE
+		FROM(
+		<include refid="allMenu" />
+		)
+		<if test="start!=null">
+			<where>
+				RM BETWEEN #{start} AND #{end}
+			</where>
+		</if>
+		ORDER BY MENUNAME
+	</select>
+
+	<!-- brand 테이블 총 행 개수 가져오기 -->
+	<select id="getMenuTotalRow" resultType="java.lang.Integer">
+		SELECT COUNT(MENUNAME)
+		FROM MENU
+	</select>
+
+	<!-- menu 추가 -->
+	<insert id="insertMenu" parameterType="menu">
+		INSERT INTO MENU
+		VALUES(#{menuname}, #{brandno}, #{price}, #{info}, #{picture})
+	</insert>
 </mapper>

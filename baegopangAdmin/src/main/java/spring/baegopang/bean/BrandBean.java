@@ -1,6 +1,6 @@
 package spring.baegopang.bean;
 
-public class BrandBean {
+public class BrandBean implements DefaultBean{
 	private String brandno;
 	private String brandname;
 	private String picture;

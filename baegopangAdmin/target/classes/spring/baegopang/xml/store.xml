@@ -3,5 +3,64 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="spring.baegopang.xml.store">
+	<!-- store 테이블 모든 데이터 가져오기 -->
+	<sql id="allStore">
+		SELECT ROW_NUMBER() OVER(ORDER BY STORENAME)RM, STORENAME, BRANDNO, LOCATION, GPA, HOURS, TEL, MINPRICE, INFO
+		FROM STORE
+	</sql> 
 	
+	<!-- unselectedstore 테이블 모든 데이터 가져오기 -->
+	<sql id="allUnselectedStore">
+		SELECT ROW_NUMBER() OVER(ORDER BY STORENAME)RM, STORENAME, BRANDNO, LOCATION, GPA, HOURS, TEL, MINPRICE, INFO
+		FROM UNSELECTEDSTORE
+	</sql> 
+
+	<!-- store 테이블 모든 데이터를 paging 후 가져오기 -->	
+	<select id="selectStore" parameterType="java.util.HashMap" resultType="store">
+		SELECT RM, STORENAME, BRANDNO, LOCATION, GPA, HOURS, TEL, MINPRICE, INFO
+		FROM(
+		<if test="mode=='selected'">
+			<include refid="allStore"/>
+		</if>
+		<if test="mode=='unselected'">
+			<include refid="allUnselectedStore"/>
+		</if>
+		)
+		<if test="start!=null">
+			<where>
+				RM BETWEEN #{start} AND #{end}
+			</where>
+		</if>
+		ORDER BY STORENAME
+	</select>
+	
+	<!-- store 테이블 총 행 개수 가져오기 -->
+	<select id="getStoreTotalRow" resultType="java.lang.Integer">
+		SELECT COUNT(STORENAME)
+		FROM STORE
+	</select>
+	
+	<!-- unselectedstore 테이블 총 행 개수 가져오기 -->
+	<select id="getUnSelectedStoreTotalRow" resultType="java.lang.Integer">
+		SELECT COUNT(STORENAME)
+		FROM UNSELECTEDSTORE
+	</select>
+	
+	<!-- unselectedstore 데이터 등록 -->
+	<insert id="insertUnStore" parameterType="store">
+		INSERT INTO UNSELECTEDSTORE(STORENAME, BRANDNO, LOCATION, GPA, HOURS, TEL, MINPRICE, INFO)
+		VALUES(#{storename},#{brandno},#{location},0,'0',#{tel},#{minprice},#{info})
+	</insert>
+	
+	<!-- unselectedstore 데이터 모두 가져오기 -->
+	<select id="unStoreNameList" resultType="store">
+		SELECT *
+		FROM UNSELECTEDSTORE
+	</select>
+	
+	<!-- unselectedstore 데이터 삭제 -->
+	<delete id="deleteUnStore" parameterType="java.lang.String">
+		DELETE FROM UNSELECTEDSTORE
+		WHERE storename = #{storename}
+	</delete>
 </mapper>

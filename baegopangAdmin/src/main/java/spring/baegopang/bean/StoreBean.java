@@ -1,6 +1,6 @@
 package spring.baegopang.bean;
 
-public class StoreBean {
+public class StoreBean implements DefaultBean{
 	private String storename;
 	private String brandno;
 	private String location;

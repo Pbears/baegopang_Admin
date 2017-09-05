@@ -1,8 +1,8 @@
 package spring.baegopang.bean;
 
-public class NoticeBean {
+public class NoticeBean implements DefaultBean{
 	private String no;
-	private String adminId;
+	private String adminid;
 	private String title;
 	private String info;
 	private String regdate;
@@ -11,10 +11,10 @@ public class NoticeBean {
 		super();
 	}
 
-	public NoticeBean(String no, String adminId, String title, String info, String regdate) {
+	public NoticeBean(String no, String adminid, String title, String info, String regdate) {
 		super();
 		this.no = no;
-		this.adminId = adminId;
+		this.adminid = adminid;
 		this.title = title;
 		this.info = info;
 		this.regdate = regdate;
@@ -28,12 +28,12 @@ public class NoticeBean {
 		this.no = no;
 	}
 
-	public String getAdminId() {
-		return adminId;
+	public String getAdminid() {
+		return adminid;
 	}
 
-	public void setAdminId(String adminId) {
-		this.adminId = adminId;
+	public void setAdminid(String adminid) {
+		this.adminid = adminid;
 	}
 
 	public String getTitle() {
@@ -62,7 +62,7 @@ public class NoticeBean {
 
 	@Override
 	public String toString() {
-		return "NoticeBean [no=" + no + ", adminId=" + adminId + ", title=" + title + ", info=" + info + ", regdate="
+		return "NoticeBean [no=" + no + ", adminid=" + adminid + ", title=" + title + ", info=" + info + ", regdate="
 				+ regdate + "]";
 	}
 

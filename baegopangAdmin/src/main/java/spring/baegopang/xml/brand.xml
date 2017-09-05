@@ -2,11 +2,54 @@
 <!DOCTYPE mapper 
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="spring.baegopang.xml.brand"> 
+<mapper namespace="spring.baegopang.xml.brand">
+	<!-- brand 테이블 모든 데이터 가져오기 -->
+	<sql id="allBrand">
+		SELECT ROW_NUMBER() OVER(ORDER BY BRANDNO)RM, BRANDNO, BRANDNAME, PICTURE
+		FROM BRAND
+	</sql> 
+
+	<!-- brand 테이블 모든 데이터를 paging 후 가져오기 -->	
+	<select id="selectBrand" parameterType="java.util.HashMap" resultType="brand">
+		SELECT RM, BRANDNO, BRANDNAME, PICTURE
+		FROM(<include refid="allBrand"/>)
+		<if test="start!=null">
+			<where>
+				RM BETWEEN #{start} AND #{end}
+			</where>
+		</if>
+		ORDER BY BRANDNO
+	</select>
+	
+	<!-- brand 테이블 총 행 개수 가져오기 -->
+	<select id="getBrandTotalRow" resultType="java.lang.Integer">
+		SELECT COUNT(BRANDNO)
+		FROM BRAND
+	</select>
+	
+	<!-- brand 테이블에 있는 brandname 모두 가져오기 -->
+	<select id="getBrandName" resultType="brand">
+		SELECT BRANDNO, BRANDNAME
+		FROM BRAND
+	</select>
+	
+	<!-- 다음 brandno 구하기 -->
+	<select id="getNextBrandNo" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT MAX(BRANDNO) BRANDNO
+		FROM BRAND
+		WHERE BRANDNO LIKE #{brandNo}||'%'
+	</select>
+	
+	<!-- brand 추가 -->
+	<insert id="insertBrand" parameterType="brand">
+		INSERT INTO BRAND
+		VALUES(#{brandno},#{brandname},#{picture})
+	</insert>
+	
+	<select id="selectBrandNo" resultType="java.lang.String">
+		SELECT BRANDNO
+		FROM BRAND
+		WHERE BRANDNAME = #{brandname}
+	</select>
 	
 </mapper>
-
-
-
-
-

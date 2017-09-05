@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="spring.baegopang.bean.NoticeBean" alias="notice"/>
 		<typeAlias type="spring.baegopang.bean.OrderBean" alias="order"/>
 		<typeAlias type="spring.baegopang.bean.StoreBean" alias="store"/>
+		<typeAlias type="spring.baegopang.bean.PageBean" alias="page"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="spring/baegopang/xml/admin.xml" />

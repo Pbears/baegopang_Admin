@@ -3,5 +3,35 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="spring.baegopang.xml.masterAskAdmin">
+	<!-- masteraskadmin 테이블 모든 데이터 가져오기 -->
+	<sql id="allAsk">
+		SELECT ROW_NUMBER() OVER(ORDER BY NO)RM, NO, MASTERINFO, MASTERID, ADMININFO, ADMINID, REGDATE, HIT, TITLE
+		FROM MASTERASKADMIN
+	</sql> 
+
+	<!-- masteraskadmin 테이블 모든 데이터를 paging 후 가져오기 -->	
+	<select id="selectAsk" parameterType="java.util.HashMap" resultType="ask">
+		SELECT RM, NO, MASTERINFO, MASTERID, ADMININFO, ADMINID, REGDATE, HIT, TITLE
+		FROM(<include refid="allAsk"/>)
+		<if test="start!=null">
+			<where>
+				RM BETWEEN #{start} AND #{end}
+			</where>
+		</if>
+		ORDER BY HIT ASC, REGDATE DESC
+	</select>
 	
+	<!-- masteraskadmin 테이블 총 행 개수 가져오기 -->
+	<select id="getAskTotalRow" resultType="java.lang.Integer">
+		SELECT COUNT(NO)
+		FROM MASTERASKADMIN
+	</select>
+	
+	<!-- 문의 답글 등록 -->
+	<update id="askUpdate" parameterType="ask">
+		UPDATE MASTERASKADMIN
+		SET ADMININFO = #{admininfo},
+		HIT = 1
+		WHERE NO = #{no}
+	</update>
 </mapper>

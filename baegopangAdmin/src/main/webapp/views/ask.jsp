@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -103,39 +104,45 @@ textarea{
 									</tr>
 								</thead>
 								<tbody>
-									<tr class="QeustionTr">
-										<td>1</td>
-										<td>1</td>
-										<td>1</td>
-										<td>1</td>
-										<td>1</td>
-										<td>1</td>
-										<td><button type="button" class="btn btn-sm btn-danger" disabled="disabled">답변요망</button></td>
-									</tr>
-									<tr class="answerTr">
-										<td colspan="6">
-											<form action="/baegopangAdmin/jsp/masterAskAdmin/insert.jsp" method="post">
-												<textarea class="form-control answerTextArea" rows="3" name="answer"></textarea>
-												<input type="hidden" name="no">
-											</form>
-										</td>
-										<td colspan="1">
-											<button type="button" class="btn btn-sm btn-primary answerInsertBtn">답변</button>
-										</td>
-									</tr>
-									
-									<tr class="completeTr">
-										<td>2</td>
-										<td>2</td>
-										<td>2</td>
-										<td>2</td>
-										<td>2</td>
-										<td>2</td>
-										<td><button type="button" class="btn btn-sm btn-primary" disabled="disabled">답변완료</button></td>
-									</tr>
-									<tr class="completeAnswer">
-										<td colspan="7">1</td>
-									</tr>
+									<c:forEach var="i" items="${list}">
+										<c:if test="${i.hit==0}">
+											<tr class="QeustionTr">
+												<td>${i.no}</td>
+												<td>${i.masterid}</td>
+												<td>${i.title}</td>
+												<td>${i.masterinfo}</td>
+												<td>${i.adminid}</td>
+												<td>${i.regdate}</td>
+												<td><button type="button" class="btn btn-sm btn-danger" disabled="disabled">답변요망</button></td>
+											</tr>
+											<tr class="answerTr">
+												<td colspan="6">
+													<form action="askUpadte.do" id="${i.no}" method="post">
+														<textarea class="form-control answerTextArea" rows="3" name="admininfo"></textarea>
+														<input type="hidden" name="no" value="${i.no}">
+													</form>
+												</td>
+												<td colspan="1">
+													<button type="button" class="btn btn-sm btn-primary answerInsertBtn" id="${i.no}">답변</button>
+												</td>
+											</tr>
+										</c:if>
+										
+										<c:if test="${i.hit==1}">
+											<tr class="completeTr">
+												<td>${i.no}</td>
+												<td>${i.masterid}</td>
+												<td>${i.title}</td>
+												<td>${i.masterinfo}</td>
+												<td>${i.adminid}</td>
+												<td>${i.regdate}</td>
+												<td><button type="button" class="btn btn-sm btn-primary" disabled="disabled">답변완료</button></td>
+											</tr>
+											<tr class="completeAnswer">
+												<td colspan="7">${i.admininfo}</td>
+											</tr>
+										</c:if>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
@@ -147,23 +154,48 @@ textarea{
 							style="width: 100%; margin: 0 auto; text-align: center;">
 							<ul class="pagination">
 								<ul class="pager">
-									<li>
-										<a href="#">Previous</a>
-									</li>
+									<c:choose>
+										<c:when test="${pageBean.currentPage == 1}">
+											<li>
+												<a href="#">Previous</a>
+											</li>
+										</c:when>
+										<c:when test="${pageBean.currentPage <= pageBean.totalPage}">
+											<li>
+												<a href="ask.do?pages=${pageBean.currentPage-1}">Previous</a>
+											</li>
+										</c:when>
+									</c:choose>
+									
 									<span> 
-					 					<li>
-					 						<a href="#"><strong>1</strong></a>
-					 					</li> 
-					 					<li>
-					 						<a href="#"><strong>1</strong></a>
-					 					</li> 
-					 					<li>
-					 						<a href="#"><strong>1</strong></a>
-					 					</li> 
+										<c:forEach var="i" begin="${pageBean.startPage}" end="${pageBean.endPage}" step="1">
+											<c:choose>
+												<c:when test="${pageBean.currentPage == i}">
+													<li>
+								 						<a href="ask.do?pages=${i}"><strong>${i}</strong></a>
+								 					</li>
+												</c:when>
+												<c:otherwise>
+													<li>
+								 						<a href="ask.do?pages=${i}">${i}</a>
+								 					</li>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
 									</span>
-									<li>
-										<a href="#">Next</a>
-									</li>
+									
+									<c:choose>
+										<c:when test="${pageBean.currentPage == pageBean.totalPage}">
+											<li>
+												<a href="#">Next</a>
+											</li>
+										</c:when>
+										<c:when test="${pageBean.currentPage < pageBean.totalPage}">
+											<li>
+												<a href="ask.do?pages=${pageBean.currentPage+1}">Next</a>
+											</li>
+										</c:when>
+									</c:choose>
 								</ul>
 							</ul>
 						</div>

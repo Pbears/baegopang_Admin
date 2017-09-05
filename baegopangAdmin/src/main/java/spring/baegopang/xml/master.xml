@@ -3,5 +3,79 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="spring.baegopang.xml.master">
+	<!-- master 테이블 모든 데이터 가져오기 -->
+	<sql id="allMaster">
+		SELECT ROW_NUMBER() OVER(ORDER BY ID)RM, ID, PW, NAME, ADDRESS, TEL, BIRTH, STORENAME, POINT
+		FROM MASTER
+	</sql>
 	
+	<!-- requestsignup 테이블 모든 데이터 가져오기 -->
+	<sql id="allRequest">
+		SELECT ROW_NUMBER() OVER(ORDER BY ID)RM, ID, PW, NAME, ADDRESS, TEL, TO_CHAR(BIRTH, 'YYYY/MM/DD') BIRTH, STORENAME, POINT
+		FROM REQUESTSIGNUP
+	</sql>
+	
+	<!-- requestdrop 테이블 모든 데이터 가져오기 -->
+	<sql id="allDrop">
+		SELECT ROW_NUMBER() OVER(ORDER BY ID)RM, ID, PW, NAME, ADDRESS, TEL, BIRTH, STORENAME, POINT
+		FROM REQUESTDROP
+	</sql>
+	
+	<!-- master 테이블 데이터 속성을 paging 후 가져오기 -->
+	<select id="selectMaster" parameterType="java.util.HashMap" resultType="master">
+		SELECT RM, ID, PW, NAME, ADDRESS, TEL, BIRTH, STORENAME, POINT
+		FROM(
+		<if test="mode=='master'">
+			<include refid="allMaster"/>
+		</if>
+		<if test="mode=='request'">
+			<include refid="allRequest"/>
+		</if>
+		<if test="mode=='drop'">
+			<include refid="allDrop"/>
+		</if>
+		)
+		<if test="start!=null">
+			<where>
+				RM BETWEEN #{start} AND #{end}
+			</where>
+		</if>
+		ORDER BY ID
+	</select>
+	
+	<!-- master 테이블 총 행 개수 가져오기 -->
+	<select id="getMasterTotalRow" resultType="java.lang.Integer">
+		SELECT COUNT(ID)
+		FROM MASTER
+	</select>
+	
+	<!-- requestsignup 테이블 총 행 개수 가져오기 -->
+	<select id="getMasterSignTotalRow" resultType="java.lang.Integer">
+		SELECT COUNT(ID)
+		FROM REQUESTSIGNUP
+	</select>
+	
+	<!-- requestdrop 테이블 총 행 개수 가져오기 -->
+	<select id="getMasterDropTotalRow" resultType="java.lang.Integer">
+		SELECT COUNT(ID)
+		FROM REQUESTDROP
+	</select>
+	
+	<!-- 사장 삭제 -->
+	<delete id="deleteMaster" parameterType="java.lang.String">
+		DELETE FROM REQUESTDROP
+		WHERE ID = #{id}
+	</delete>
+	
+	<!-- 가입 요청 테이블에서 삭제 -->
+	<delete id="deleteRequestMaster" parameterType="java.lang.String">
+		DELETE FROM REQUESTSIGNUP
+		WHERE ID = #{id}
+	</delete>
+	
+	<!-- 가입 요청 사장 테이블에 등록 -->
+	<insert id="insertMaster" parameterType="master">
+		INSERT INTO MASTER
+		VALUES(#{id}, #{pw}, #{name}, #{address}, #{tel}, TO_DATE(#{birth},'YY-MM-DD'), #{storename}, 0)
+	</insert>
 </mapper>

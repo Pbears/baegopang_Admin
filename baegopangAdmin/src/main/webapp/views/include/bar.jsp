@@ -12,7 +12,7 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="#">Baegopang Admin</a>
+		<a class="navbar-brand" href="home.do">Baegopang Admin</a>
 	</div>
 
 	<!-- Top Menu Items -->
@@ -53,74 +53,74 @@
 				</a>
 				<ul id="demo" class="collapse">
 					<li>
-						<a href="brand.do">
+						<a href="brand.do?pages=1">
 							<i class="fa fa-fw fa-table"></i> 브랜드
 						</a>
 					</li>
 					<li>
-						<a href="master.do">
+						<a href="master.do?pages=1&mode=master">
 							<i class="fa fa-fw fa-table"></i> 사장
 						</a>
 					</li>
 					<li>
-						<a href="requestSign.do">
+						<a href="requestSign.do?pages=1&mode=request">
 							<i class="fa fa-fw fa-table"></i> 가입요청
 						</a>
 					</li>
 					<li>
-						<a href="requestDrop.do">
+						<a href="requestDrop.do?pages=1&mode=drop">
 							<i class="fa fa-fw fa-table"></i> 탈퇴요청
 						</a>
 					</li>
 					<li>
-						<a href="member.do">
+						<a href="member.do?pages=1">
 							<i class="fa fa-fw fa-table"></i> 사용자
 						</a>
 					</li>
 					<li>
-						<a href="menu.do">
+						<a href="menu.do?pages=1">
 							<i class="fa fa-fw fa-table"></i> 메뉴
 						</a>
 					</li>
 					<li>
-						<a href="store.do">
+						<a href="store.do?pages=1&mode=selected">
 							<i class="fa fa-fw fa-table"></i> 음식점
 						</a>
 					</li>
 					<li>
-						<a href="unStore.do">
+						<a href="unStore.do?pages=1&mode=unselected">
 							<i class="fa fa-fw fa-table"></i> 미선택음식점
 						</a>
 					</li>
 					<li>
-						<a href="orderComplete.do">
+						<a href="orderComplete.do?pages=1&mode=complete">
 							<i class="fa fa-fw fa-table"></i> 주문배달완료
 						</a>
 					</li>
 					<li>
-						<a href="orderWait.do">
+						<a href="orderWait.do?pages=1&mode=wait">
 							<i class="fa fa-fw fa-table"></i> 주문승인대기
 						</a>
 					</li>
 					<li>
-						<a href="ordering.do">
+						<a href="ordering.do?pages=1&mode=ordering">
 							<i class="fa fa-fw fa-table"></i> 주문배달중
 						</a>
 					</li>
 					<li>
-						<a href="orderNagative.do">
+						<a href="orderNagative.do?pages=1&mode=negative">
 							<i class="fa fa-fw fa-table"></i> 주문승인거절
 						</a>
 					</li>
 				</ul>
 			</li>
 			<li>
-	            	<a href="notice.do">
+	            	<a href="notice.do?pages=1">
 	            		<i class="fa fa-fw fa-edit"></i> 공지사항
 	            	</a>
             </li>
             <li>
-				<a href="ask.do">
+				<a href="ask.do?pages=1">
 					<i class="fa fa-fw fa-edit"></i> 문의
 				</a>
 			</li>

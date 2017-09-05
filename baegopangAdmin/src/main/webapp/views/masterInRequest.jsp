@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -50,7 +51,7 @@ $(function(){
 		var result = confirm('승인할 정보가 맞습니까?\n\n'+'   id : '+id+'\n   pw : '+pw+'\n   name : '+name
 				+'\n   address : '+address+'\n   tel : '+tel+'\n   birth : '+birth+'\n   storename : '+storename);
 		if(result) { 
-			location.href="/baegopangAdmin/jsp/masterRequest/insert.jsp?id="+id+
+			location.href="masterInsert.do?id="+id+
 					"&pw="+pw+"&name="+name+"&address="+address+"&tel="+tel+"&birth="+birth+"&storename="+storename;
 		}
 		
@@ -58,7 +59,7 @@ $(function(){
 	$("button.btn-danger").click(function(){
 		var result = confirm('정말 삭제하시겠습니까?');
 		if(result) { 
-			location.href="/baegopangAdmin/jsp/masterRequest/delete.jsp?id="+$(this).attr("id");
+			location.href="masterInsertRequestNegative.do?id="+$(this).attr("id");
 		}
 	});
 	$("tr.ttr").click(function(){
@@ -78,7 +79,7 @@ $(function(){
 				<div class="row">
 					<div class="col-lg-12">
 						<h1 class="page-header">
-							MasterInRequest <small>환영합니다 ${id}님
+							사장 가입 요청 <small>환영합니다 ${id}님
 							</small>
 						</h1>
 					</div>
@@ -87,7 +88,7 @@ $(function(){
 
 				<div class="row">
 					<div class="col-lg-12">
-						<h2>사장님 가입요청</h2>
+						<h2>사장님 가입 요청 목록</h2>
 						<div class="table-responsive">
 							<table class="table table-hover">
 								<thead>
@@ -103,27 +104,32 @@ $(function(){
 									</tr>
 								</thead>
 								<tbody>
-									<tr class="ttr">
-										<td class="tdId">1</td>
-										<td class="tdPw">1</td>
-										<td class="tdName">1</td>
-										<td class="tdAddress">1</td>
-										<td class="tdTel">1</td>
-										<td class="tdBirth">1</td>
-										<td class="tdStoreName">1</td>
-										<td class="tdPoint">1</td>
-									</tr>
-									<tr class="requestTr">
-										<td colspan="4">
-											<select class="form-control">
-												<option value="empty" selected="selected">선택하세요</option>
-											</select>
-										</td>
-										<td colspan="3">
-											<button type="button" class="btn btn-sm btn-primary">승인</button>
-											<button type="button" class="btn btn-sm btn-danger">거절</button>	
-										</td>
-									</tr>
+									<c:forEach var="i" items="${list}">
+										<tr class="ttr">
+											<td class="tdId">${i.id}</td>
+											<td class="tdPw">${i.pw}</td>
+											<td class="tdName">${i.name}</td>
+											<td class="tdAddress">${i.address}</td>
+											<td class="tdTel">${i.tel}</td>
+											<td class="tdBirth">${i.birth}</td>
+											<td class="tdStoreName">${i.storename}</td>
+											<td class="tdPoint">${i.point}</td>
+										</tr>
+										<tr class="requestTr">
+											<td colspan="4">
+												<select class="form-control">
+													<option value="empty" selected="selected">선택하세요</option>
+													<c:forEach var="i" items="${unStoreNameList}">
+														<option value="${i.storename}">${i.storename}</option>
+													</c:forEach>
+												</select>
+											</td>
+											<td colspan="3">
+												<button type="button" class="btn btn-sm btn-primary">승인</button>
+												<button type="button" class="btn btn-sm btn-danger" id="${i.id}">거절</button>	
+											</td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
@@ -135,17 +141,48 @@ $(function(){
 							style="width: 100%; margin: 0 auto; text-align: center;">
 							<ul class="pagination">
 								<ul class="pager">
-									<li>
-										<a href="#">Previous</a>
-									</li>
+									<c:choose>
+										<c:when test="${pageBean.currentPage == 1}">
+											<li>
+												<a href="#">Previous</a>
+											</li>
+										</c:when>
+										<c:when test="${pageBean.currentPage <= pageBean.totalPage}">
+											<li>
+												<a href="requestSign.do?pages=${pageBean.currentPage-1}">Previous</a>
+											</li>
+										</c:when>
+									</c:choose>
+									
 									<span> 
-					 					<li>
-					 						<a href="#"><strong>1</strong></a>
-					 					</li> 
+										<c:forEach var="i" begin="${pageBean.startPage}" end="${pageBean.endPage}" step="1">
+											<c:choose>
+												<c:when test="${pageBean.currentPage == i}">
+													<li>
+								 						<a href="requestSign.do?pages=${i}"><strong>${i}</strong></a>
+								 					</li>
+												</c:when>
+												<c:otherwise>
+													<li>
+								 						<a href="requestSign.do?pages=${i}">${i}</a>
+								 					</li>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
 									</span>
-									<li>
-										<a href="#">Next</a>
-									</li>
+									
+									<c:choose>
+										<c:when test="${pageBean.currentPage == pageBean.totalPage}">
+											<li>
+												<a href="#">Next</a>
+											</li>
+										</c:when>
+										<c:when test="${pageBean.currentPage < pageBean.totalPage}">
+											<li>
+												<a href="requestSign.do?pages=${pageBean.currentPage+1}">Next</a>
+											</li>
+										</c:when>
+									</c:choose>
 								</ul>
 							</ul>
 						</div>

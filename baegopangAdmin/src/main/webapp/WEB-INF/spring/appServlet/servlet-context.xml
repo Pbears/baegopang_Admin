@@ -29,6 +29,11 @@
 		<beans:property name="username" value="babysean" />
 		<beans:property name="password" value="12341234" />
 	</beans:bean>
+	
+	<!-- File Upload -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10000000" />
+	</beans:bean>
 
 	<!-- XML -->
 	<beans:bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean">

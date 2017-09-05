@@ -3,5 +3,81 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="spring.baegopang.xml.order">
+	<!-- foodorder 테이블 승인대기중인 모든 데이터 가져오기 -->
+	<sql id="allWaitOrder">
+		SELECT ROW_NUMBER() OVER(ORDER BY ORDERNUMBER)RM, ORDERNUMBER, ORDERTIME, MEMBERID, MEMBERNAME, MEMBERTEL, MEMBERADDRESS, PRICE, ORDERINFO, MENUNAME, AMOUNT, STATE, STORENAME, STOREADDRESS, STORETEL, HIT
+		FROM FOODORDER WHERE STATE='승인대기'
+	</sql> 
+	
+	<!-- foodorder 테이블 배달완료인 모든 데이터 가져오기 -->
+	<sql id="allCompleteOrder">
+		SELECT ROW_NUMBER() OVER(ORDER BY ORDERNUMBER)RM, ORDERNUMBER, ORDERTIME, MEMBERID, MEMBERNAME, MEMBERTEL, MEMBERADDRESS, PRICE, ORDERINFO, MENUNAME, AMOUNT, STATE, STORENAME, STOREADDRESS, STORETEL, HIT
+		FROM FOODORDER WHERE STATE='배달완료'
+	</sql> 
+	
+	<!-- foodorder 테이블 배달중인 모든 데이터 가져오기 -->
+	<sql id="allOrdering">
+		SELECT ROW_NUMBER() OVER(ORDER BY ORDERNUMBER)RM, ORDERNUMBER, ORDERTIME, MEMBERID, MEMBERNAME, MEMBERTEL, MEMBERADDRESS, PRICE, ORDERINFO, MENUNAME, AMOUNT, STATE, STORENAME, STOREADDRESS, STORETEL, HIT
+		FROM FOODORDER WHERE STATE='승인완료'
+	</sql> 
+	
+	<!-- foodorder 테이블 승인거절인 모든 데이터 가져오기 -->
+	<sql id="allNegativeOrder">
+		SELECT ROW_NUMBER() OVER(ORDER BY ORDERNUMBER)RM, ORDERNUMBER, ORDERTIME, MEMBERID, MEMBERNAME, MEMBERTEL, MEMBERADDRESS, PRICE, ORDERINFO, MENUNAME, AMOUNT, STATE, STORENAME, STOREADDRESS, STORETEL, HIT
+		FROM FOODORDER WHERE STATE='거절'
+	</sql> 
 
+	<!-- brand 테이블 모든 데이터를 paging 후 가져오기 -->	
+	<select id="selectOrder" parameterType="java.util.HashMap" resultType="order">
+		SELECT RM, ORDERNUMBER, ORDERTIME, MEMBERID, MEMBERNAME, MEMBERTEL, MEMBERADDRESS, PRICE, ORDERINFO, MENUNAME, AMOUNT, STATE, STORENAME, STOREADDRESS, STORETEL, HIT
+		FROM(
+		<if test="mode=='wait'">
+			<include refid="allWaitOrder"/>
+		</if>
+		<if test="mode=='complete'">
+			<include refid="allCompleteOrder"/>
+		</if>
+		<if test="mode=='ordering'">
+			<include refid="allOrdering"/>
+		</if>
+		<if test="mode=='negative'">
+			<include refid="allNegativeOrder"/>
+		</if>
+		)
+		<if test="start!=null">
+			<where>
+				RM BETWEEN #{start} AND #{end}
+			</where>
+		</if>
+		ORDER BY ORDERNUMBER
+	</select>
+	
+	<!-- brand 테이블 승인대기중인 총 행 개수 가져오기 -->
+	<select id="getOrderWaitTotalRow" resultType="java.lang.Integer">
+		SELECT COUNT(ORDERNUMBER)
+		FROM FOODORDER
+		WHERE STATE = '승인대기'
+	</select>
+	
+	<!-- brand 테이블 배달완료인 총 행 개수 가져오기 -->
+	<select id="getOrderCompleteTotalRow" resultType="java.lang.Integer">
+		SELECT COUNT(ORDERNUMBER)
+		FROM FOODORDER
+		WHERE STATE = '배달완료'
+	</select>
+	
+	<!-- brand 테이블 배달중인 총 행 개수 가져오기 -->
+	<select id="getOrderingTotalRow" resultType="java.lang.Integer">
+		SELECT COUNT(ORDERNUMBER)
+		FROM FOODORDER
+		WHERE STATE = '승인완료'
+	</select>
+	
+	<!-- brand 테이블 승인거절인 총 행 개수 가져오기 -->
+	<select id="getOrderNegativeTotalRow" resultType="java.lang.Integer">
+		SELECT COUNT(ORDERNUMBER)
+		FROM FOODORDER
+		WHERE STATE = '거절'
+	</select>
+	
 </mapper>

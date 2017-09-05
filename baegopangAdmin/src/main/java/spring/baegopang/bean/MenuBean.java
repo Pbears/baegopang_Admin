@@ -1,6 +1,6 @@
 package spring.baegopang.bean;
 
-public class MenuBean {
+public class MenuBean implements DefaultBean{
 	private String menuname;
 	private String brandno;
 	private int price;

@@ -1,6 +1,6 @@
 package spring.baegopang.bean;
 
-public class MemberBean {
+public class MemberBean implements DefaultBean{
 	private String id;
 	private String pw;
 	private String name;
